@@ -3,21 +3,24 @@ syntax = "proto3";
 package substreams.entity.v1;
 
 message EntityChanges {
-  repeated EntityChange entity_changes = 5;
+	string block_hash = 1;
+	uint64 block_number = 2;
+	string parent_hash = 3;
+  	repeated EntityChange entity_changes = 5;
 }
 
 message EntityChange {
-  string entity = 1;
-  string id = 2;
-  uint64 ordinal = 3;
-  enum Operation {
-    UNSET = 0;    // Protobuf default should not be used, this is used so that the consume can ensure that the value was actually specified
-    CREATE = 1;
-    UPDATE = 2;
-    DELETE = 3;
-  }
-  Operation operation = 4;
-  repeated Field fields = 5;
+	string entity = 1;
+	string id = 2;
+	uint64 ordinal = 3;
+	enum Operation {
+		UNSET = 0;    // Protobuf default should not be used, this is used so that the consume can ensure that the value was actually specified
+		CREATE = 1;
+		UPDATE = 2;
+		DELETE = 3;
+	}
+	Operation operation = 4;
+	repeated Field fields = 5;
 }
 
 message Value {
@@ -41,6 +44,6 @@ message Array {
 
 message Field {
   string name = 1;
-  optional Value new_value = 3;
-  optional Value old_value = 5;
+  Value new_value = 3;
+  Value old_value = 5;
 }
